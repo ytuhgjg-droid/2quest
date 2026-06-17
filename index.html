@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Интерактивные таблицы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        h3 {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        th {
+            background-color: #e8e8e8;
+            font-weight: bold;
+        }
+        td:first-child {
+            text-align: left;
+            width: 120px;
+        }
+        .dynamic {
+            display: inline-block;
+            cursor: pointer;
+        }
+        .dynamic img {
+            width: 32px;
+            height: 32px;
+            margin: 0 2px;
+            vertical-align: middle;
+        }
+        .trampInput {
+            width: 80px;
+            font-size: 13px;
+            padding: 3px 5px;
+            border: 2px solid #007bff;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<h3>Таблица 3.2 Шахматы</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Чебурашка</th>
+            <th>Крокодил Гена</th>
+            <th>Шапокляк</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ход, пнд.</td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>Ход, вторник.</td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>Ход, среда</td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+            <td>
+                <span class="dynamic">
+                    <img src="rook.png" alt="Ладья">
+                    <img src="bishop.png" alt="Слон">
+                    <img src="king.png" alt="Король">
+                    <img src="queen.png" alt="Ферзь">
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    var elems = document.getElementsByClassName("dynamic");
+    var trampInput = document.createElement("input");
+    var istdselect = false;
+    trampInput.type = "text";
+    trampInput.className = "trampInput";
+
+    // Обработчик потери фокуса - конвертируем буквы обратно в картинки
+    trampInput.addEventListener("blur", function() {
+        let text = trampInput.value;
+        let html = text;
+        
+        // Конвертируем буквы обратно в картинки
+        html = html.replace(/Л/gi, '<img src="rook.png" alt="Ладья">');
+        html = html.replace(/С/gi, '<img src="bishop.png" alt="Слон">');
+        html = html.replace(/К/gi, '<img src="king.png" alt="Король">');
+        html = html.replace(/Ф/gi, '<img src="queen.png" alt="Ферзь">');
+        
+        trampInput.parentNode.innerHTML = html;
+        istdselect = false;
+    }, false);
+
+    for (var i = 0; i < elems.length; i++) {
+        var el = elems[i];
+
+        el.addEventListener("click", function() {
+            if (istdselect) return;
+            istdselect = true;
+
+            let innerHTML = this.innerHTML;
+
+            // Заменяем картинки на буквы
+            innerHTML = innerHTML.replace(/<img[^>]*src=["']rook\.png["'][^>]*>/gi, "Л");
+            innerHTML = innerHTML.replace(/<img[^>]*src=["']bishop\.png["'][^>]*>/gi, "С");
+            innerHTML = innerHTML.replace(/<img[^>]*src=["']king\.png["'][^>]*>/gi, "К");
+            innerHTML = innerHTML.replace(/<img[^>]*src=["']queen\.png["'][^>]*>/gi, "Ф");
+
+            // Удаляем все пробелы и переносы строк
+            innerHTML = innerHTML.replace(/\s+/g, '');
+
+            this.innerHTML = "";
+            trampInput.value = innerHTML;
+            this.appendChild(trampInput);
+
+            trampInput.focus();
+            trampInput.select();
+
+        }.bind(el), false);
+    }
+</script>
+
+</body>
+</html>
+ <body>
+</html>
